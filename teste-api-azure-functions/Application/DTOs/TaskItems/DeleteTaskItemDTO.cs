@@ -1,4 +1,4 @@
-﻿namespace teste_api_azure_functions.Application.DTOs.TaskItem
+﻿namespace teste_api_azure_functions.Application.DTOs.TaskItems
 {
     public class DeleteTaskItemDTO
     {

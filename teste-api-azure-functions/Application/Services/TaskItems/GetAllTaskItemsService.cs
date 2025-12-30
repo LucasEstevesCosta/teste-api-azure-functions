@@ -12,7 +12,7 @@ namespace teste_api_azure_functions.Application.Services.TaskItems
             _repository = repository;
         }
 
-        public async Task<IReadOnlyList<TaskItem>> GetAllAsync()
+        public async Task<IReadOnlyList<TaskItem>> ExecuteAsync()
         {
             return await _repository.GetAllAsync();
         }
