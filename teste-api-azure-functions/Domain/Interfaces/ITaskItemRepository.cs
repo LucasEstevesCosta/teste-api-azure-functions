@@ -2,7 +2,7 @@
 
 namespace teste_api_azure_functions.Domain.Interfaces
 {
-    public interface ITaskRepository
+    public interface ITaskItemRepository
     {
         Task AddAsync(TaskItem taskItem);
         Task UpdateAsync(TaskItem taskItem);
