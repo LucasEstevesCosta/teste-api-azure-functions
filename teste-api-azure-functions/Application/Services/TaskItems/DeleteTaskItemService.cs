@@ -2,7 +2,7 @@
 
 namespace teste_api_azure_functions.Application.Services.TaskItems
 {
-    internal class DeleteTaskItemService
+    public class DeleteTaskItemService
     {
         private readonly ITaskItemRepository _repository;
 

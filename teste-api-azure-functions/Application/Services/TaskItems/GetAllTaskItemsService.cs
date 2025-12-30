@@ -3,7 +3,7 @@ using teste_api_azure_functions.Domain.Interfaces;
 
 namespace teste_api_azure_functions.Application.Services.TaskItems
 {
-    internal class GetAllTaskItemsService
+    public class GetAllTaskItemsService
     {
         private readonly ITaskItemRepository _repository;
 
