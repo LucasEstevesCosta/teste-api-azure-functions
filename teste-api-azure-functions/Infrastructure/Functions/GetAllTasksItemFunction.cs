@@ -1,7 +1,6 @@
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.Net;
-using System.Text.Json;
 using teste_api_azure_functions.Application.Services.TaskItems;
 
 namespace teste_api_azure_functions.Infrastructure.Functions;

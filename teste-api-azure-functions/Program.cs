@@ -1,19 +1,17 @@
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using teste_api_azure_functions.Domain.Interfaces;
-using teste_api_azure_functions.Infrastructure.Repositories;
+using teste_api_azure_functions.Application.DependencyInjection;
+using teste_api_azure_functions.Infrastructure.DependencyInjection;
 
-var builder = FunctionsApplication.CreateBuilder(args);
+var host = new HostBuilder()
+    .ConfigureFunctionsWebApplication()
+    .ConfigureServices((context, services) =>
+    {
+        var config = context.Configuration;
 
-builder.ConfigureFunctionsWebApplication();
+        services.AddApplicationServices();
+        services.AddInfrastructure(config);
 
-builder.Services
-    .AddApplicationInsightsTelemetryWorkerService()
-    .ConfigureFunctionsApplicationInsights();
+    })
+    .Build();
 
-builder.Services.AddSingleton<ITaskItemRepository, InMemoryTaskItemRepository>();
-
-
-builder.Build().Run();
+host.Run();

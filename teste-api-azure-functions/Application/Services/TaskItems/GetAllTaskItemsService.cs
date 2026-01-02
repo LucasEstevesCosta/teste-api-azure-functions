@@ -1,20 +1,19 @@
 ﻿using teste_api_azure_functions.Domain.Entities;
 using teste_api_azure_functions.Domain.Interfaces;
 
-namespace teste_api_azure_functions.Application.Services.TaskItems
+namespace teste_api_azure_functions.Application.Services.TaskItems;
+
+public class GetAllTaskItemsService
 {
-    public class GetAllTaskItemsService
+    private readonly ITaskItemRepository _repository;
+
+    public GetAllTaskItemsService(ITaskItemRepository repository)
     {
-        private readonly ITaskItemRepository _repository;
+        _repository = repository;
+    }
 
-        public GetAllTaskItemsService(ITaskItemRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public async Task<IReadOnlyList<TaskItem>> ExecuteAsync()
-        {
-            return await _repository.GetAllAsync();
-        }
+    public async Task<IReadOnlyList<TaskItem>> ExecuteAsync()
+    {
+        return await _repository.GetAllAsync();
     }
 }

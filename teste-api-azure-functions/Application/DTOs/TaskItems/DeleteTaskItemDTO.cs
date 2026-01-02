@@ -1,7 +1,6 @@
-﻿namespace teste_api_azure_functions.Application.DTOs.TaskItems
+﻿namespace teste_api_azure_functions.Application.DTOs.TaskItems;
+
+public class DeleteTaskItemDTO
 {
-    public class DeleteTaskItemDTO
-    {
-        public Guid id { get; set; }
-    }
+    public Guid id { get; set; }
 }
