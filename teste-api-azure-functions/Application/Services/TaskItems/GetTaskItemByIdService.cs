@@ -1,4 +1,5 @@
-﻿using teste_api_azure_functions.Domain.Entities;
+﻿using teste_api_azure_functions.Application.DTOs.TaskItems;
+using teste_api_azure_functions.Domain.Entities;
 using teste_api_azure_functions.Domain.Interfaces;
 
 namespace teste_api_azure_functions.Application.Services.TaskItems;
@@ -11,9 +12,18 @@ public class GetTaskItemByIdService
     {
         _repository = repository;
     }
-    
-    public async Task<TaskItem?> ExecuteAsync(Guid id)
+
+    public async Task<ShowTaskItemDTO?> ExecuteAsync(Guid id)
     {
-        return await _repository.GetByIdAsync(id);
+        TaskItem? taskItem = await _repository.GetByIdAsync(id);
+
+        if (taskItem == null)
+        {
+            return null;
+        }
+
+        ShowTaskItemDTO result = new(taskItem);
+
+        return result;
     }
 }
