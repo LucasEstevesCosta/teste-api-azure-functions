@@ -21,7 +21,7 @@ public class GetAllTaskItemsService
 
         foreach (TaskItem task in taskItems)
         {
-            var taskDTO = new ShowTaskItemDTO(task);
+            ShowTaskItemDTO taskDTO = new(task);
             result.Add(taskDTO);
         }
 
