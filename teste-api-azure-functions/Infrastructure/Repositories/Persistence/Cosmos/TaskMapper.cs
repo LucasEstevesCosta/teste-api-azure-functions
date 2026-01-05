@@ -9,19 +9,19 @@ public static class TaskMapper
         {
             id = task.id.ToString(),
             title = task.title,
-            dueDate = task.dueDate,
             createdAt = task.createdAt,
-            description = task.description,
-            isClosed = task.isClosed
+            isClosed = task.isClosed,
+            dueDate = task.dueDate,
+            description = task.description
         };
 
     public static TaskItem ToEntity(TaskDocument doc)
         => TaskItem.Restore(
             Guid.Parse(doc.id),
             doc.title,
-            doc.dueDate,
             doc.createdAt,
-            doc.description,
-            doc.isClosed
+            doc.isClosed,
+            doc.dueDate,
+            doc.description
         );
 }
