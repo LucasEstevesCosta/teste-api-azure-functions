@@ -57,6 +57,20 @@ public class TaskItemTests
     }
 
     [Fact]
+    public void UpdateDueDate_ShouldThrowDomainException_WhenDueDateIsBeforeCreatedAt()
+    {
+        // Arrange
+        TaskItem taskItem = new("Test Task");
+        var invalidDueDate = taskItem.createdAt.AddDays(-1);
+
+        // Act
+        Action act = () => taskItem.UpdateDueDate(invalidDueDate);
+
+        // Assert
+        Assert.Throws<DomainException>(act);
+    }
+
+    [Fact]
     public void Create_ShouldThrowDomainException_WhenDueDateIsBeforeCreatedAt()
     {
         // arrange
@@ -90,6 +104,19 @@ public class TaskItemTests
         string invalidTitle = "";
         // Act
         Action act = () => taskItem.UpdateTitle(invalidTitle);
+        // Assert
+        Assert.Throws<DomainException>(act);
+    }
+
+    [Fact]
+    public void UpdateTitle_ShouldThrowDomainException_WhenTitleIsNull()
+    {
+        // Arrange
+        TaskItem taskItem = new("Valid Title");
+
+        // Act
+        Action act = () => taskItem.UpdateTitle(null);
+
         // Assert
         Assert.Throws<DomainException>(act);
     }
@@ -150,5 +177,88 @@ public class TaskItemTests
         taskItem.UpdateDescription(newDescription);
         // Assert
         Assert.Equal(newDescription, taskItem.description);
+    }
+
+    [Fact]
+    public void UpdateDescription_ShouldAllowNull()
+    {
+        // Arrange
+        TaskItem taskItem = new("Test Task", description: "Initial description");
+
+        // Act
+        taskItem.UpdateDescription(null);
+
+        // Assert
+        Assert.Null(taskItem.description);
+    }
+
+    [Fact]
+    public void Restore_ShouldCreateTaskWithProvidedState()
+    {
+        // Arrange
+        var id = Guid.NewGuid();
+        var createdAt = DateTime.UtcNow.AddDays(-2);
+        var dueDate = DateTime.UtcNow.AddDays(3);
+        string title = "Restored Task";
+        string description = "Restored description";
+        bool isClosed = true;
+
+        // Act
+        var taskItem = TaskItem.Restore(
+            id,
+            title,
+            createdAt,
+            isClosed,
+            dueDate,
+            description
+        );
+
+        // Assert
+        Assert.Equal(id, taskItem.id);
+        Assert.Equal(title, taskItem.title);
+        Assert.Equal(createdAt, taskItem.createdAt);
+        Assert.Equal(dueDate, taskItem.dueDate);
+        Assert.Equal(description, taskItem.description);
+        Assert.True(taskItem.isClosed);
+    }
+
+    [Fact]
+    public void Restore_ShouldThrowDomainException_WhenDueDateIsBeforeCreatedAt()
+    {
+        // Arrange
+        var id = Guid.NewGuid();
+        var createdAt = DateTime.UtcNow;
+        var invalidDueDate = createdAt.AddHours(-1);
+
+        // Act
+        Action act = () => TaskItem.Restore(
+            id,
+            "Invalid Task",
+            createdAt,
+            false,
+            invalidDueDate
+        );
+
+        // Assert
+        Assert.Throws<DomainException>(act);
+    }
+
+    [Fact]
+    public void Restore_ShouldThrowDomainException_WhenTitleIsEmpty()
+    {
+        // Arrange
+        var id = Guid.NewGuid();
+        var createdAt = DateTime.UtcNow;
+
+        // Act
+        Action act = () => TaskItem.Restore(
+            id,
+            "",
+            createdAt,
+            false
+        );
+
+        // Assert
+        Assert.Throws<DomainException>(act);
     }
 }

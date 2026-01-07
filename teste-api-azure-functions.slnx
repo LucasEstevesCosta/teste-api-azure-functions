@@ -3,6 +3,7 @@
     <Project Path="teste-api-azure-functions/teste-api-azure-functions.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="teste-api-azure-functions.Application.Services/teste-api-azure-functions.Application.Tests.csproj" Id="abd6acd0-bc88-40f7-a471-9547bc9104ed" />
     <Project Path="teste-api-azure-functions.Domain.Tests/teste-api-azure-functions.Domain.Tests.csproj" Id="aee7f530-3fe2-4162-a4fa-c533e68eb697" />
   </Folder>
 </Solution>
